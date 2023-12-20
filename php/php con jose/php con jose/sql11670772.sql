@@ -115,9 +115,6 @@ ALTER TABLE `notas`
 --
 -- Filtros para la tabla `notas`
 --
-ALTER TABLE `notas`
-  ADD CONSTRAINT `notas_id_foreign` FOREIGN KEY (`id`) REFERENCES `autores` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

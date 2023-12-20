@@ -6,7 +6,7 @@ require 'partials/hero.php';
 
 <div class="p-3">
     <a href="notas" class="link-primary">Volver a la lista de notas</a>
-<p class="mt-3"><?= $nota['contenido']?></p>
+<p class="mt-3"><?= htmlspecialchars($nota['contenido'])?></p>
 </div>
 
 <?php
