@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+        margin: 30px;
+      }
+      form{
+        width: fit-content;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+</head>
+<body>
+    <h1>Agenda</h1>
+    <span id="agenda">
+        
+
+    </span>
+    <hr>
+    <h2>Agregar Contacto</h2>
+    <form action="" method="post" style="border: 1px solid black;">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Introduce nombre aqui...">
+        <br>
+        <br>
+        <label for="telefono">Telefono:</label>
+        <input id="telefono" name="telefono" type="text" placeholder="Introduce telefono aqui...">
+        <br>
+        <br>
+        <input type='text' id='oculto' name='oculto' value=".$_POST['agenda']." hidden>
+        <input id="enviar" name="enviar" type="submit" value="Enviar">
+    </form>
+</body>
+</html>
