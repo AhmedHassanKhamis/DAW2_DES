@@ -5,7 +5,7 @@ Para seleccionar el producto concreto utiliza un cuadro de selección dentro de 
 
 
 <?php 
-require_once('variables.php');
+require('variables.php');
 
 $conexion = new mysqli($server,$user,$password,$bbdd);
 $error = $conexion->connect_errno;
@@ -14,11 +14,13 @@ if ($error != null) {
      exit();
 }else{
 
-	$tablas = $dwes->query('show tables');
-	print_r($tablas);
-	$dwes->close();
+	$tablas = array_column($conexion->query('select nombre_corto from producto')->fetch_all(),0);
+	if (isset($_POST['submit'])) {
+		$tienda = array_column($conexion->query('select tienda.nombre,stock.unidades from stock,tienda,producto where tienda.cod = stock.tienda and producto.cod = stock.producto and producto.nombre_corto="'.$_POST['producto'] .'"')->fetch_all(),0);
+		$stock = array_column($conexion->query('select tienda.nombre,stock.unidades from stock,tienda,producto where tienda.cod = stock.tienda and producto.cod = stock.producto and producto.nombre_corto="'.$_POST['producto'] .'"')->fetch_all(),1);
+	}
+	$conexion->close();
 }
-
 
 
 print_r("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
@@ -32,27 +34,34 @@ print_r("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://
 
 <body>
 
-	<div id='encabezado'>
-		<h1>Ejercicio: </h1>
+		<h1>PRODUCTO: </h1>
 		<form id='form_seleccion' action='' method='post'>
 			<select name='producto' id='producto'>
 			");
-			foreach ($producto as $key => $value) {
-				print_r("<option value='$value'>$value</option>");
+			for ($i=1;$i <= count($tablas);$i++) {
+				print_r("<option value='".$tablas[$i]."'>".$tablas[$i]."</option>");
 			}
 			
 			print_r("
 			</select>
+			<input type='submit' name='submit'>
 		</form>
-	</div>
-
-	<div id='contenido'>
-		<h2>Contenido</h2>
-	</div>
-
-	<div id='pie'>
-	</div>
+		<hr>
+		<h2>STOCK EN TIENDA</h2>
+		<table>
+    <thead>
+      <tr>
+        <th>Tienda</th>
+        <th>Unidades</th>
+      </tr>
+    </thead>
+    <tbody align='center'>");
+	for ($i=0; $i < count($tienda); $i++) { 
+		print_r("<tr><td>".$tienda[$i]."</td><td>".$stock[$i]."</td></tr>");
+	}
+	print_r("
+    </tbody>
+  </table>
 </body>
-
 </html>");
 ?>
